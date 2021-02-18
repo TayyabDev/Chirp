@@ -4,7 +4,7 @@
 * David Huang
 * Tayyab Waqar
 ## Description of the web application
-The application will be a social media site similar to Twiiter. Users will be able to make posts alongside videos, pictures, or simply text. Other users can like the post,
+The application will be a social media site similar to Twitter. Users will be able to make posts alongside videos, pictures, or simply text. Other users can like the post,
 follow the user for future posts, or comment on the post. Users can also make posts private to followers or public to everyone. Public posts will be searchable and users may
 make their profiles private.
 ## Description of features for the beta version
