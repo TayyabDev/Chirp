@@ -12,7 +12,7 @@ export default function LoginForm() {
     //   api.login(email, password);
   };
   return (
-    <div class="bg-purple-50 flex justify-center pb-8">
+    <div class="bg-gradient-to-br from-purple-200 via-blue-100 to-purple-200 flex items-center justify-center pb-8">
       <form onSubmit={handleSubmit}>
         <label class="text-2xl font-bold text-purple-400">
           Sign up for Chirp!
