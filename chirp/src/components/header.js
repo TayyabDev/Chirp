@@ -2,23 +2,25 @@ import React, { Component } from "react";
 import { Link, BrowserRouter } from "react-router-dom";
 import SignUp from "./signup";
 import Home from "./home";
-import logo from "../logo.svg";
+import logo from "../assets/images/logo.svg";
 
 export default function Header(props) {
   let authenticated = props.user;
   return (
-    <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+    <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-5">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
-        <img
-          class="fill-current h-8 w-8 mr-2"
-          width="54"
-          height="54"
-          src={logo}
-          alt="logo"
-        />
-        <span class="font-semibold text-xl tracking-tight text-primary-colour">
-          Chirp
-        </span>
+        <Link to="/home">
+          <img
+            class="fill-current h-8 w-8 mr-2"
+            width="54"
+            height="54"
+            src={logo}
+            alt="logo"
+          />
+        </Link>
+        <Link to="/home">
+          <span class="chirp-title">Chirp</span>
+        </Link>
       </div>
       <div class="block lg:hidden">
         <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -44,13 +46,9 @@ function unauthenticatedNavbar() {
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
         <Link to="/home">
-          <a class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-            Home
-          </a>
+          <a class="navbar-item">Home</a>
         </Link>
-        <a class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-          About
-        </a>
+        <a class="navbar-item">About</a>
       </div>
       <div>
         <Link to="/login">
@@ -59,9 +57,7 @@ function unauthenticatedNavbar() {
       </div>
       <div>
         <Link to="/signup">
-          <button class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
-            Sign Up
-          </button>
+          <button class="btn-secondary ml-2">Sign Up</button>
         </Link>
       </div>
     </div>

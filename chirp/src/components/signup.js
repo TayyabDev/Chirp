@@ -12,7 +12,7 @@ export default function SignUp() {
     //   api.login(email, password);
   };
   return (
-    <div class="bg-teal-500 h-screen flex items-start justify-center ">
+    <div class=" h-screen flex items-start justify-center ">
       <form onSubmit={handleSubmit}>
         <label class="text-2xl font-bold text-primary-colour">
           Sign up for Chirp!
