@@ -49,6 +49,9 @@ function unauthenticatedNavbar() {
           <a class="navbar-item">Home</a>
         </Link>
         <a class="navbar-item">About</a>
+        <Link to="/post">
+          <a class="navbar-item">Preview</a>
+        </Link>
       </div>
       <div>
         <Link to="/login">
