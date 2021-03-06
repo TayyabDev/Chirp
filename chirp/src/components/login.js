@@ -1,9 +1,45 @@
-import React from 'react'
+import React from "react";
 
-const LogIn = () => {
-    return (
+export default function Login() {
+  const [login, setLogin] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //   api.login(email, password);
+  };
+  return (
+    <div class="bg-teal-500 h-screen flex items-start justify-center ">
+      <form onSubmit={handleSubmit}>
+        <label class="text-2xl font-bold text-primary-colour">Login</label>
         <div>
-            <h1>Log in here</h1>
+          <input
+            class="rounded-input"
+            type="text"
+            id="username"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            placeholder="Username/E-mail"
+            min="1"
+            max="16"
+            required
+          />
         </div>
-    )
+        <div>
+          <input
+            class="rounded-input"
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            min="8"
+            max="64"
+            required
+          />
+        </div>
+        <button class="btn-primary text-primary-colour">Login</button>
+      </form>
+    </div>
+  );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function LoginForm() {
+export default function SignUp() {
   const [email, setEmail] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
@@ -12,9 +12,9 @@ export default function LoginForm() {
     //   api.login(email, password);
   };
   return (
-    <div class="bg-gradient-to-br from-purple-200 via-blue-100 to-purple-200 flex items-center justify-center pb-8">
+    <div class="bg-teal-500 h-screen flex items-start justify-center ">
       <form onSubmit={handleSubmit}>
-        <label class="text-2xl font-bold text-purple-400">
+        <label class="text-2xl font-bold text-primary-colour">
           Sign up for Chirp!
         </label>
         <div>
@@ -78,7 +78,7 @@ export default function LoginForm() {
             required
           />
         </div>
-        <button class="btn-primary">Sign Up</button>
+        <button class="btn-primary text-primary-colour">Sign Up</button>
       </form>
     </div>
   );
