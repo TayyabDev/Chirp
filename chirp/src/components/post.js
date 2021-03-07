@@ -34,8 +34,8 @@ export default function Posts(props) {
 
 let Post = (props) => {
   return (
-    <div class="p-6 m-2 ml-12 max-w-md bg-white rounded-xl shadow-2xl flex items-center space-x-4">
-      <div class="flex-shrink-0">
+    <div class="p-6 m-3 ml-12 max-w-md bg-teal-100 rounded-xl shadow-2xl ring-4 ring-teal-600 flex items-center space-x-4">
+      <div class="flex-shrink-0 ring-teal-300 ring-4 rounded-xl p-2">
         <img class="h-12 w-12" src={props.avatarUrl} alt="User Avatar" />
       </div>
       <div>

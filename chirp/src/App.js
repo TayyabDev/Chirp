@@ -4,7 +4,6 @@ import Header from "./components/header";
 import SignUp from "./components/signup";
 import Home from "./components/home";
 import Login from "./components/login";
-import Posts from "./components/post";
 import NotFoundPage from "./components/notFoundPage";
 import Feed from "./components/feed";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";

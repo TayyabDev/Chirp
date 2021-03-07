@@ -5,7 +5,7 @@ import logo from "../assets/images/logo.svg";
 export default function Header(props) {
   let authenticated = props.user;
   return (
-    <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-5">
+    <nav class="flex items-center justify-between flex-wrap bg-teal-500 pt-2 pl-2 pr-2">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
         <Link to="/home">
           <img
@@ -49,14 +49,13 @@ function UnauthorizedHeader() {
           <a class="navbar-item">Preview</a>
         </Link>
       </div>
-      <div>
+      <div class="flex-wrap space-x-2">
         <Link to="/login">
-          <button class="btn-primary mr-2">Log In</button>
+          <button class="btn-primary">Log In</button>
         </Link>
-      </div>
-      <div>
+
         <Link to="/signup">
-          <button class="btn-secondary ml-2">Sign Up</button>
+          <button class="btn-secondary">Sign Up</button>
         </Link>
       </div>
     </div>
