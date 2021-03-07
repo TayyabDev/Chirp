@@ -4,7 +4,8 @@ import Header from "./components/header";
 import SignUp from "./components/signup";
 import Home from "./components/home";
 import Login from "./components/login";
-import Post from "./components/post";
+import NotFoundPage from "./components/notFoundPage";
+import Dashboard from "./components/dashboard";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
           <Route path="/home" component={Home} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
-          <Route path="/post" component={Post} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
     </Router>

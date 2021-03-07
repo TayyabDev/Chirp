@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Link, BrowserRouter } from "react-router-dom";
-import SignUp from "./signup";
-import Home from "./home";
 import logo from "../assets/images/logo.svg";
 
 export default function Header(props) {
   let authenticated = props.user;
   return (
-    <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-5">
+    <nav class="flex items-center justify-between flex-wrap bg-teal-500 pt-2 pl-2 pr-2">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
         <Link to="/home">
           <img
@@ -34,57 +32,59 @@ export default function Header(props) {
           </svg>
         </button>
       </div>
-      {authenticated
-        ? authenticatedNavbar(props.user)
-        : unauthenticatedNavbar()}
+      {authenticated ? <AuthorizedHeader /> : <UnauthorizedHeader />}
     </nav>
   );
 }
 
-function unauthenticatedNavbar() {
+function UnauthorizedHeader() {
   return (
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
         <Link to="/home">
           <a class="navbar-item">Home</a>
         </Link>
-        <a class="navbar-item">About</a>
-        <Link to="/post">
+        <Link to="/about">
+          <a class="navbar-item">About</a>
+        </Link>
+        <Link to="/dashboard">
           <a class="navbar-item">Preview</a>
         </Link>
       </div>
-      <div>
+      <div class="flex-wrap space-x-2">
         <Link to="/login">
-          <button class="btn-primary mr-2">Log In</button>
+          <button class="btn-primary">Log In</button>
         </Link>
-      </div>
-      <div>
+
         <Link to="/signup">
-          <button class="btn-secondary ml-2">Sign Up</button>
+          <button class="btn-secondary">Sign Up</button>
         </Link>
       </div>
     </div>
   );
 }
 
-function authenticatedNavbar(props) {
+function AuthorizedHeader(props) {
   return (
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
-        <a class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-          Home
-        </a>
-        <a class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-          Messages
-        </a>
+        <Link to="/home">
+          <a class="navbar-item">Home</a>
+        </Link>
+        <Link to="/dashboard">
+          <a class="navbar-item">Feed</a>
+        </Link>
+        <Link to="/messages">
+          <a class="navbar-item">Messages</a>
+        </Link>
+        <Link to="/settings">
+          <a class="navbar-item">Settings</a>
+        </Link>
       </div>
-      <div class="text-sm">
-        <a class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-          Profile
-        </a>
-        <a class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
-          Sign Out
-        </a>
+      <div class="flex-wrap space-x-2">
+        <Link to="/signout">
+          <button class="btn-secondary">Sign Out</button>
+        </Link>
       </div>
     </div>
   );
