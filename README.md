@@ -14,12 +14,7 @@ For the final version we will additionally implement functionality for posts to 
 the ability to privatize their accounts.
 
 ## Description of the technologies to be used for building and deploying the application
-<<<<<<< HEAD
 We will use the course technology introduced such as basic HTML, CSS, Javascript, Node, React, TailwindCSS, Express, MongoDB, and GraphQL.
-=======
-We will use the course technology introduced such as basic HTML, CSS, Javascript, Node, React, TailwindCSS, Express, and MongoDB.
-
->>>>>>> 971fbce... pivot idea
 ## Description of the top 5 technical challenges
 * Streaming content to other users
 * Saving past broadcasts.
