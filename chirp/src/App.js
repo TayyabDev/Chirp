@@ -5,6 +5,7 @@ import SignUp from "./components/signup";
 import Home from "./components/home";
 import Login from "./components/login";
 import Post from "./components/post";
+import NotFoundPage from "./components/notFoundPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/post" component={Post} />
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
     </Router>

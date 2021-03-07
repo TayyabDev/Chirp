@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Link, BrowserRouter } from "react-router-dom";
-import SignUp from "./signup";
-import Home from "./home";
 import logo from "../assets/images/logo.svg";
 
 export default function Header(props) {
@@ -34,14 +32,12 @@ export default function Header(props) {
           </svg>
         </button>
       </div>
-      {authenticated
-        ? authenticatedNavbar(props.user)
-        : unauthenticatedNavbar()}
+      {authenticated ? <AuthorizedHeader /> : <UnauthorizedHeader />}
     </nav>
   );
 }
 
-function unauthenticatedNavbar() {
+function UnauthorizedHeader() {
   return (
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
@@ -67,7 +63,7 @@ function unauthenticatedNavbar() {
   );
 }
 
-function authenticatedNavbar(props) {
+function AuthorizedHeader(props) {
   return (
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
