@@ -5,7 +5,7 @@ import SignUp from "./components/signup";
 import Home from "./components/home";
 import Login from "./components/login";
 import NotFoundPage from "./components/notFoundPage";
-import Feed from "./components/feed";
+import Dashboard from "./components/dashboard";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
           <Route path="/home" component={Home} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
-          <Route path="/feed" component={Feed} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
