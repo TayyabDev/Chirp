@@ -45,7 +45,7 @@ function UnauthorizedHeader() {
           <a class="navbar-item">Home</a>
         </Link>
         <a class="navbar-item">About</a>
-        <Link to="/post">
+        <Link to="/feed">
           <a class="navbar-item">Preview</a>
         </Link>
       </div>
