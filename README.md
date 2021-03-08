@@ -1,4 +1,4 @@
-# Social Media Site
+# Video Streaming App
 ## Team members
 * Chun Ho Lee
 * Tayyab Waqar
