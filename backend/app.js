@@ -3,40 +3,135 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const thumbsupply = require('thumbsupply');
-
+const bcrypt = require('bcrypt');
+const cookie = require('cookie');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const mongoose = require('mongoose');
+const { ObjectId } = require('bson');
 const app = express();
+
+app.use(bodyParser.json());
 app.use(cors());
 
-const { MongoClient } = require('mongodb');
+const url = "mongodb+srv://chirpadmin:chirpadmin@cluster0.cjetq.mongodb.net/chirpdb";
 
-async function main(){
-    /**
-     * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
-     * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
-     */
-    const uri = "mongodb+srv://chirpadmin:chirpadmin@cluster0.cjetq.mongodb.net/test";
-    const client = new MongoClient(uri, {useUnifiedTopology: true});
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect();
-        // Make the appropriate DB calls
-        await  listDatabases(client);
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
+const userSchema = new mongoose.Schema({
+    email: {
+        type: String
+    },
+    password: {
+        type: String
     }
-}
+});
 
-main().catch(console.error);
+let Users = mongoose.model('users', userSchema);
 
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+mongoose.connect(url,{
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+})
+
+app.use(session({
+    secret: 'changed secret',
+    resave: false,
+    saveUninitialized: true,
+}));
+
+app.use(function(req, res, next){
+    req.user = ('user' in req.session)? req.session.user : null;
+    let email = (req.user)? req.user._id : '';
+    res.setHeader('Set-Cookie', cookie.serialize('email', email, {
+          path : '/', 
+          maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+    }));
+    next();
+});
+
+let isAuthenticated = function(req, res, next) {
+    if (!req.user) return res.status(401).end("access denied");
+    next();
 };
 
-app.get('/video', (req, res) => {
+app.use(function (req, res, next){
+    console.log("HTTP request", req.email, req.method, req.url, req.body);
+    next();
+});
+
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
+
+
+app.post('/test/', async function (req, res, next) {
+    const result = await Users.find();
+    console.log('test');
+    res.json(result);
+});
+
+// curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signup/
+app.post('/signup/', function (req, res, next) {
+    // extract data from HTTP request
+    if (!('email' in req.body)) return res.status(400).end('email is missing');
+    if (!('password' in req.body)) return res.status(400).end('password is missing');
+    let email = req.body.email;
+    let password = req.body.password;
+    // check if user already exists in the database
+    Users.findOne({email: email}, function(err, user){
+        if (err) return res.status(500).end(err);
+        if (user) return res.status(409).end("email " + email + " already exists");
+        // generate a new salt and hash
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+                // insert new user into the database
+                Users.create({email: email, password: hash}, function(err, result){
+                    if (err) return res.status(500).end(err);
+                    return res.json("user " + email + " signed up");
+                });
+            });
+        });
+    });
+});
+
+// curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signin/
+app.post('/signin/', function (req, res, next) {
+    // extract data from HTTP request
+    if (!('email' in req.body)) return res.status(400).end('email is missing');
+    if (!('password' in req.body)) return res.status(400).end('password is missing');
+    let email = req.body.email;
+    let password = req.body.password;
+    // retrieve user from the database
+    Users.findOne({email: email}, function(err, user){
+        if (err) return res.status(500).end(err);
+        if (!user) return res.status(401).end("access denied");
+        console.log("dasfdsf");
+        
+        bcrypt.compare(password, user.password, function(err, valid) {
+           if (err) return res.status(500).end(err);
+           if (!valid) return res.status(401).end("access denied");
+           // start a session
+           req.session.user = user;
+            res.setHeader('Set-Cookie', cookie.serialize('email', email, {
+              path : '/', 
+              maxAge: 60 * 60 * 24 * 7
+            }));
+            return res.json("user " + email + " signed in");
+        }); 
+    });
+});
+
+// curl -b cookie.txt -c cookie.txt localhost:3000/signout/
+app.get('/signout/', function (req, res, next) {
+    req.session.destroy();
+    res.setHeader('Set-Cookie', cookie.serialize('email', '', {
+          path : '/', 
+          maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+    }));
+    res.redirect('/');
+});
+
+
+/*
+app.get('/video', isAuthenticated, (req, res) => {
     res.sendFile('assets/sample.mp4', { root: __dirname });
 });
 
@@ -81,8 +176,8 @@ app.get('/video/:id', (req, res) => {
 app.get('/video/:id/poster', (req, res) => {
     thumbsupply.generateThumbnail(`assets/${req.params.id}.mp4`)
     .then(thumb => res.sendFile(thumb));
-});
+}); */
 
-app.listen(3000, () => {
-    console.log('Listening on port 3000!')
-});
+const server = app.listen(3000, () => {
+    console.log("app is running on 3000");
+})
