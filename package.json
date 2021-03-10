@@ -1,0 +1,26 @@
+{
+  "name": "project-team-7",
+  "version": "1.0.0",
+  "description": "* Chun Ho Lee * Tayyab Waqar",
+  "main": "index.js",
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "server": "node backend/app.js",
+    "client": "npm start --prefix chirp",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UTSCC09/project-team-7.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UTSCC09/project-team-7/issues"
+  },
+  "homepage": "https://github.com/UTSCC09/project-team-7#readme"
+}

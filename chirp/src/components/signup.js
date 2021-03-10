@@ -1,18 +1,32 @@
 import React from "react";
+var axios = require("axios");
 
 export default function SignUp() {
   const [email, setEmail] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [resp, setResp] = React.useState("Start streaming instantly!");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //   api.login(email, password);
+    let user = {
+      email: email,
+      username: username,
+      password: password,
+    };
+
+    axios.post("http://localhost:9080/api/signup", user).then(
+      (response) => {
+        console.log(response);
+        setResp(response.data.message);
+      },
+      (error) => {
+        setResp(error.response.data.error);
+      }
+    );
   };
   return (
-    <div class=" h-screen flex items-start justify-center ">
+    <div class="h-screen m-auto flex flex-col items-center text-center ">
       <form onSubmit={handleSubmit}>
         <label class="text-2xl font-bold text-primary-colour">
           Sign up for Chirp!
@@ -29,28 +43,6 @@ export default function SignUp() {
           />
         </div>
         <div>
-          <div>
-            <input
-              class="rounded-input"
-              type="text"
-              id="first_name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First Name"
-              required
-            />
-          </div>
-          <div>
-            <input
-              class="rounded-input"
-              type="text"
-              id="last_name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              placeholder="Last Name"
-              required
-            />
-          </div>
           <div>
             <input
               class="rounded-input"
@@ -78,7 +70,10 @@ export default function SignUp() {
             required
           />
         </div>
-        <button class="btn-primary text-primary-colour">Sign Up</button>
+        <button class="btn-primary text-primary flex-grow  ">Sign Up</button>
+        <br></br>
+        <br></br>
+        <label class="text-2xl font-bold text-primary-colour">{resp}</label>
       </form>
     </div>
   );
