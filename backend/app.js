@@ -46,7 +46,7 @@ app.use(
 
 app.use(function (req, res, next) {
   req.user = "user" in req.session ? req.session.user : null;
-  let email = req.user ? req.user._id : "";
+  let email = req.user ? req.user.email : "";
   res.setHeader(
     "Set-Cookie",
     cookie.serialize("email", email, {
@@ -72,7 +72,6 @@ var upload = multer({ dest: "uploads/" });
 
 app.post("/test/", async function (req, res, next) {
   const result = await Users.find();
-  console.log("test");
   res.json(result);
 });
 
@@ -122,7 +121,6 @@ app.post("/signin/", function (req, res, next) {
   Users.findOne({ email: email }, function (err, user) {
     if (err) return res.status(500).end(err);
     if (!user) return res.status(401).end("access denied");
-    console.log("dasfdsf");
 
     bcrypt.compare(password, user.password, function (err, valid) {
       if (err) return res.status(500).end(err);
@@ -139,6 +137,10 @@ app.post("/signin/", function (req, res, next) {
       return res.json("user " + email + " signed in");
     });
   });
+});
+
+app.get("/testsession", function (req, res) {
+  res.json(req.session.user);
 });
 
 // curl -b cookie.txt -c cookie.txt localhost:3000/signout/
