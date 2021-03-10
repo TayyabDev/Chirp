@@ -54,6 +54,7 @@ app.use(function (req, res, next) {
       maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
     })
   );
+  res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
 
@@ -61,6 +62,12 @@ let isAuthenticated = function (req, res, next) {
   if (!req.user) return res.status(401).end("access denied");
   next();
 };
+
+app.get("/", async function (req, res, next) {
+  res.json({
+    hello: "welcome to the api",
+  });
+});
 
 app.use(function (req, res, next) {
   console.log("HTTP request", req.email, req.method, req.url, req.body);
@@ -76,13 +83,14 @@ app.post("/test/", async function (req, res, next) {
 });
 
 // curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signup/
-app.post("/signup/", function (req, res, next) {
+app.post("/api/signup", cors(), function (req, res, next) {
   // extract data from HTTP request
-  if (!("email" in req.body)) return res.status(400).end("email is missing");
+  if (!("email" in req.body))
+    return res.status(400).json({ error: "Email is missing" });
   if (!("username" in req.body))
-    return res.status(400).end("username is missing");
+    return res.status(400).json({ error: "Username is missing" });
   if (!("password" in req.body))
-    return res.status(400).end("password is missing");
+    return res.status(400).json({ error: "Pasword is missing" });
   let email = req.body.email;
   let username = req.body.username;
   let password = req.body.password;
@@ -90,8 +98,8 @@ app.post("/signup/", function (req, res, next) {
   Users.findOne(
     { $or: [{ email: email }, { username: username }] },
     function (err, user) {
-      if (err) return res.status(500).end(err);
-      if (user) return res.status(409).end("email/username already exists");
+      if (err) return res.status(500).json(err);
+      if (user) return res.status(409).json({ error: "Email already exists" });
       // generate a new salt and hash
       bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(password, salt, function (err, hash) {
@@ -99,8 +107,8 @@ app.post("/signup/", function (req, res, next) {
           Users.create(
             { email: email, username: username, password: hash },
             function (err, result) {
-              if (err) return res.status(500).end(err);
-              return res.json("user " + email + " signed up");
+              if (err) return res.status(500).json(err);
+              return res.json({ message: "User has been registered!" });
             }
           );
         });
@@ -110,7 +118,7 @@ app.post("/signup/", function (req, res, next) {
 });
 
 // curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signin/
-app.post("/signin/", function (req, res, next) {
+app.post("/api/signin", cors(), function (req, res, next) {
   // extract data from HTTP request
   if (!("email" in req.body)) return res.status(400).end("email is missing");
   if (!("password" in req.body))
@@ -134,18 +142,19 @@ app.post("/signin/", function (req, res, next) {
           maxAge: 60 * 60 * 24 * 7,
         })
       );
-      return res.json("user " + email + " signed in");
+      return res.json({ message: "User has signed in." });
     });
   });
 });
 
-app.get("/testsession", function (req, res) {
+app.get("/api/testsession", cors(), function (req, res) {
   res.json(req.session.user);
 });
 
 // curl -b cookie.txt -c cookie.txt localhost:3000/signout/
-app.get("/signout/", function (req, res, next) {
+app.get("/api/signout/", cors(), function (req, res, next) {
   req.session.destroy();
+
   res.setHeader(
     "Set-Cookie",
     cookie.serialize("email", "", {
@@ -204,6 +213,6 @@ app.get('/video/:id/poster', (req, res) => {
     .then(thumb => res.sendFile(thumb));
 }); */
 
-const server = app.listen(3000, () => {
-  console.log("app is running on 3000");
+const server = app.listen(9080, () => {
+  console.log("app is running on 9080");
 });
