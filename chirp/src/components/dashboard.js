@@ -1,19 +1,47 @@
-import Feed from "./feed";
-import Header from "./header";
-import ReactPlayer from "react-player";
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import Cookies from "js-cookie";
+import {
+  SessionContext,
+  getSessionCookie,
+  setSessionCookie,
+} from "../libs/sessions";
+import { AuthorizedHeader } from "./header";
+var axios = require("axios");
 
 export default function Dashboard(props) {
-  const [data, setData] = useState();
+  const session = useContext(SessionContext);
+  const [data, setData] = useState("");
+  let history = useHistory();
 
-  // if (!query) return;
-  //   setStatus("fetching");
+  useEffect(() => {
+    let c = getSessionCookie();
+    if (c.login == null) {
+      console.log("Cant access dashboard if not logged in.");
+      //   setSessionCookie({});
+      history.push("/signout");
+    } else {
+      const fetchUserData = async () => {
+        axios
+          .get("http://localhost:9080/api/userData", { withCredentials: true })
+          .then(
+            (response) => {
+              console.log(response);
+              setData(response.data);
+            },
+            (error) => {
+              history.push("/login");
+            }
+          );
+      };
+      fetchUserData();
+    }
+  }, [session]);
 
-  // replaced with real props once connected to backend
-  let p = {
-    user: {
-      name: "Erlich Bachman",
-    },
-  };
-  return <div>{data}</div>;
+  return (
+    <div>
+      <AuthorizedHeader />
+      <pre class="text-xl">{JSON.stringify(data)}</pre>
+    </div>
+  );
 }
