@@ -12,7 +12,7 @@ const { ObjectId } = require("bson");
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 const url =
   "mongodb+srv://chirpadmin:chirpadmin@cluster0.cjetq.mongodb.net/chirpdb";
@@ -54,12 +54,12 @@ app.use(function (req, res, next) {
       maxAge: 60 * 60 * 24 * 7, // 1 week in number of seconds
     })
   );
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   next();
 });
 
 let isAuthenticated = function (req, res, next) {
-  if (!req.user) return res.status(401).end("access denied");
+  if (!req.user) return res.status(401).json({ error: "Access Denied" });
   next();
 };
 
@@ -82,8 +82,19 @@ app.post("/test/", async function (req, res, next) {
   res.json(result);
 });
 
+app.get("/api/userData", isAuthenticated, function (req, res, next) {
+  Users.findOne(
+    { $or: [{ email: req.user.email }, { username: req.user.username }] },
+    function (err, user) {
+      if (err) return res.status(500).json(err);
+      if (user) return res.json({ user });
+      return res.json({});
+    }
+  );
+});
+
 // curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signup/
-app.post("/api/signup", cors(), function (req, res, next) {
+app.post("/api/signup", function (req, res, next) {
   // extract data from HTTP request
   if (!("email" in req.body))
     return res.status(400).json({ error: "Email is missing" });
@@ -118,7 +129,7 @@ app.post("/api/signup", cors(), function (req, res, next) {
 });
 
 // curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signin/
-app.post("/api/signin", cors(), function (req, res, next) {
+app.post("/api/signin", function (req, res, next) {
   // extract data from HTTP request
   if (!("email" in req.body)) return res.status(400).end("email is missing");
   if (!("password" in req.body))
@@ -147,12 +158,14 @@ app.post("/api/signin", cors(), function (req, res, next) {
   });
 });
 
-app.get("/api/testsession", cors(), function (req, res) {
-  res.json(req.session.user);
+app.get("/api/isLoggedIn", function (req, res) {
+  req.session.user
+    ? res.json({ message: "logged in" })
+    : res.status(401).json({ message: "not logged in" });
 });
 
 // curl -b cookie.txt -c cookie.txt localhost:3000/signout/
-app.get("/api/signout/", cors(), function (req, res, next) {
+app.get("/api/signout/", function (req, res, next) {
   req.session.destroy();
 
   res.setHeader(

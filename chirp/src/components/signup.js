@@ -1,4 +1,5 @@
 import React from "react";
+import { UnauthorizedHeader } from "./header";
 var axios = require("axios");
 
 export default function SignUp() {
@@ -26,55 +27,58 @@ export default function SignUp() {
     );
   };
   return (
-    <div class="h-screen m-auto flex flex-col items-center text-center ">
-      <form onSubmit={handleSubmit}>
-        <label class="text-2xl font-bold text-primary-colour">
-          Sign up for Chirp!
-        </label>
-        <div>
-          <input
-            class="rounded-input"
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="E-Mail"
-            required
-          />
-        </div>
-        <div>
+    <div>
+      <UnauthorizedHeader />
+      <div class="h-screen m-auto flex flex-col items-center text-center ">
+        <form onSubmit={handleSubmit}>
+          <label class="text-2xl font-bold text-primary-colour">
+            Sign up for Chirp!
+          </label>
           <div>
             <input
               class="rounded-input"
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
-              min="1"
-              max="16"
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="E-Mail"
               required
             />
           </div>
-        </div>
-        <div>
-          <input
-            class="rounded-input"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            min="8"
-            max="64"
-            required
-          />
-        </div>
-        <button class="btn-primary text-primary flex-grow  ">Sign Up</button>
-        <br></br>
-        <br></br>
-        <label class="text-2xl font-bold text-primary-colour">{resp}</label>
-      </form>
+          <div>
+            <div>
+              <input
+                class="rounded-input"
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                min="1"
+                max="16"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <input
+              class="rounded-input"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              min="8"
+              max="64"
+              required
+            />
+          </div>
+          <button class="btn-primary text-primary flex-grow  ">Sign Up</button>
+          <br></br>
+          <br></br>
+          <label class="text-2xl font-bold text-primary-colour">{resp}</label>
+        </form>
+      </div>
     </div>
   );
 }
