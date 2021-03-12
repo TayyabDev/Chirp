@@ -1,9 +1,11 @@
 import React from "react";
+import { AuthorizedHeader } from "./header";
 
 export default function Browse() {
   return (
     <div>
-      <p>a</p>
+      <AuthorizedHeader />
+      <p class="text-3xl text-white">Under Development</p>
     </div>
   );
 }

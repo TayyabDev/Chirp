@@ -25,7 +25,7 @@ function App() {
   return (
     <SessionContext.Provider value={session}>
       <Router history={history}>
-        <div class="h-screen bg-teal-500">
+        <div class="h-screen min-w-min bg-blueGray-900">
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />

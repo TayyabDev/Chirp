@@ -30,7 +30,10 @@ export default function Dashboard(props) {
             (response) => {
               console.log(response);
               setData(response.data);
-              setLoading(false);
+              setTimeout(() => {
+                setLoading(false);
+              }, 1000); // note this is just here to test out loading animations, api doesnt actually take this long
+              //   setLoading(false);
             },
             (error) => {
               history.push("/login");
@@ -47,7 +50,9 @@ export default function Dashboard(props) {
       {loading ? (
         <LoadingButton />
       ) : (
-        <pre class="text-xl break-words">{JSON.stringify(data, null, 2)}</pre>
+        <pre class="text-xl text-white break-words">
+          {JSON.stringify(data, null, 2)}
+        </pre>
       )}
     </div>
   );

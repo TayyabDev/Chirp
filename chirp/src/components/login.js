@@ -46,10 +46,10 @@ export default function Login() {
             <input
               class="rounded-input"
               type="text"
-              id="username"
+              id="email"
               value={login}
               onChange={(e) => setLogin(e.target.value)}
-              placeholder="Username / E-mail"
+              placeholder="E-mail"
               min="1"
               max="16"
               required

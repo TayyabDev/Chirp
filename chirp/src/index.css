@@ -9,7 +9,7 @@
 }
 
 .navbar-item {
-  @apply text-2xl block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4;
+  @apply text-2xl block mt-4 lg:inline-block lg:mt-0 text-blueGray-200 hover:text-white mr-4;
 }
 
 .rounded-input {
@@ -17,13 +17,13 @@
 }
 
 .btn-primary {
-  @apply px-4 py-1 text-2xl text-teal-100 font-semibold rounded-full border border-teal-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2;
+  @apply px-4 py-1 text-2xl text-blueGray-100 font-semibold rounded-full border border-blueGray-200 hover:text-white hover:bg-blueGray-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-blueGray-600 focus:ring-offset-2;
 }
 
 .btn-secondary {
-  @apply px-4 py-1 text-2xl text-teal-100 font-semibold rounded-full border border-teal-200 hover:text-white hover:bg-teal-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2;
+  @apply px-4 py-1 text-2xl text-blueGray-100 font-semibold rounded-full border border-blueGray-200 hover:text-white hover:bg-blueGray-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-blueGray-600 focus:ring-offset-2;
 }
 
 .text-primary-colour {
-  @apply text-teal-800;
+  @apply text-blueGray-200;
 }
