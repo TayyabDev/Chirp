@@ -3,7 +3,7 @@ import { Link, BrowserRouter } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import { SessionContext, getSessionCookie } from "../libs/sessions";
 
-export function UnauthorizedHeader(props) {
+export function UnauthorizedHeader2(props) {
   //   const session = useRef(useContext(SessionContext));
   //   const [authenticated, setAuthenticated] = useState(false);
 
@@ -14,7 +14,7 @@ export function UnauthorizedHeader(props) {
   //   }, [session]);
 
   return (
-    <nav class="flex items-center justify-between flex-wrap bg-teal-500 pt-2 pl-2 pr-2">
+    <nav class="flex items-center justify-between flex-wrap bg-blueGray-500 pt-2 pl-2 pr-2">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
         <Link to="/home">
           <img
@@ -66,7 +66,77 @@ export function UnauthorizedHeader(props) {
     </nav>
   );
 }
-export function AuthorizedHeader(props) {
+
+export function UnauthorizedHeader({ fixed }) {
+  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  return (
+    <>
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-blueGray-700 mb-3">
+        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <Link to="/home">
+              <a className="text-lg font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white">
+                CHIRP
+              </a>
+            </Link>
+            <button
+              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-red rounded bg-red block lg:hidden outline-none focus:outline-none"
+              type="button"
+              onClick={() => setNavbarOpen(!navbarOpen)}
+            >
+              <i className="fas fa-bars"></i>
+            </button>
+          </div>
+          <div
+            className={
+              "lg:flex flex-grow items-center" +
+              (navbarOpen ? " flex" : " hidden")
+            }
+            id="example-navbar-danger"
+          >
+            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+              <Link to="/home">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className="text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Home</span>
+                  </a>
+                </li>
+              </Link>
+              <Link to="/about">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className="text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">About</span>
+                  </a>
+                </li>
+              </Link>
+              <Link to="/signup">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className=" text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Sign Up</span>
+                  </a>
+                </li>
+              </Link>
+              <Link to="/login">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className="text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Sign In</span>
+                  </a>
+                </li>
+              </Link>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
+}
+
+export function AuthorizedHeader2(props) {
+  const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <nav class="flex items-center justify-between flex-wrap bg-teal-500 pt-2 pl-2 pr-2">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
@@ -120,5 +190,81 @@ export function AuthorizedHeader(props) {
         </div>
       </div>
     </nav>
+  );
+}
+
+export function AuthorizedHeader({ fixed }) {
+  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  return (
+    <>
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-blueGray-700 mb-3">
+        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <Link to="/home">
+              <a className="text-lg font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white">
+                CHIRP
+              </a>
+            </Link>
+            <button
+              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-red rounded bg-red block lg:hidden outline-none focus:outline-none"
+              type="button"
+              onClick={() => setNavbarOpen(!navbarOpen)}
+            >
+              <i className="fas fa-bars"></i>
+            </button>
+          </div>
+          <div
+            className={
+              "lg:flex flex-grow items-center" +
+              (navbarOpen ? " flex" : " hidden")
+            }
+            id="example-navbar-danger"
+          >
+            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+              <Link to="/dashboard">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className="text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Dashboard</span>
+                  </a>
+                </li>
+              </Link>
+              <Link to="/following">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className="text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Following</span>
+                  </a>
+                </li>
+              </Link>
+              <Link to="/browse">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className=" text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Browse</span>
+                  </a>
+                </li>
+              </Link>
+              <Link to="/settings">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className="text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Settings</span>
+                  </a>
+                </li>
+              </Link>
+              <Link to="/signout">
+                <li className="nav-item">
+                  <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                    <i className="text-lg leading-lg text-white opacity-75"></i>
+                    <span className="ml-2">Sign Out</span>
+                  </a>
+                </li>
+              </Link>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 }

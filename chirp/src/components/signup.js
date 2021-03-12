@@ -1,5 +1,7 @@
 import React from "react";
 import { UnauthorizedHeader } from "./header";
+import { useHistory } from "react-router-dom";
+
 var axios = require("axios");
 
 export default function SignUp() {
@@ -7,6 +9,7 @@ export default function SignUp() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [resp, setResp] = React.useState("Start streaming instantly!");
+  let history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +23,7 @@ export default function SignUp() {
       (response) => {
         console.log(response);
         setResp(response.data.message);
+        history.push("/login");
       },
       (error) => {
         setResp(error.response.data.error);
