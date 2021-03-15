@@ -12,6 +12,7 @@ import Browse from "./components/browse";
 import { useHistory } from "react-router-dom";
 import { SessionContext, getSessionCookie } from "./libs/sessions";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
   const [session, setSession] = useState(getSessionCookie());

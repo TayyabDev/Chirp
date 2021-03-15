@@ -7,6 +7,8 @@ import {
   setSessionCookie,
 } from "../libs/sessions";
 import { AuthorizedHeader } from "./header";
+import Skeleton from "react-loading-skeleton";
+
 var axios = require("axios");
 
 export default function Dashboard(props) {
@@ -29,9 +31,9 @@ export default function Dashboard(props) {
           .then(
             (response) => {
               console.log(response);
-              setData(response.data);
+              //   setData(response.data);
               setTimeout(() => {
-                setLoading(false);
+                setData(response.data);
               }, 1000); // note this is just here to test out loading animations, api doesnt actually take this long
               //   setLoading(false);
             },
@@ -47,13 +49,9 @@ export default function Dashboard(props) {
   return (
     <div>
       <AuthorizedHeader />
-      {loading ? (
-        <LoadingButton />
-      ) : (
-        <pre class="text-xl text-white break-words">
-          {JSON.stringify(data, null, 2)}
-        </pre>
-      )}
+      {/* {loading ? <LoadingButton /> : <pre>{JSON.stringify(data, null, 2)}</pre>} */}
+      <h1>User information</h1>
+      <h2>{data ? JSON.stringify(data, null, 2) : <Skeleton count={3} />}</h2>
     </div>
   );
 }
