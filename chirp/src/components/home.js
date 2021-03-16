@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div>
       <UnauthorizedHeader />
-      <div class="min-h-full max-w-max flex items-center px-6 lg:px-32 text-white">
+      <div class="min-h-full max-w-max flex items-center px-6 lg:px-32 ">
         <section class=" md:w-9/12 xl:w-8/12">
           <span class="font-bold uppercase tracking-widest">Yet Another</span>
           <h1 class="text-3xl lg:text-5xl font-bold text-teal-900">

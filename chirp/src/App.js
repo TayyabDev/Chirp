@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "./assets/images/logo.svg";
-import "./App.css";
+// import "./App.css";
 import Header from "./components/header";
 import SignUp from "./components/signup";
 import Home from "./components/home";
