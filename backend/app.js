@@ -138,12 +138,12 @@ app.post("/api/signin", function (req, res, next) {
   let password = req.body.password;
   // retrieve user from the database
   Users.findOne({ email: email }, function (err, user) {
-    if (err) return res.status(500).end(err);
-    if (!user) return res.status(401).end("access denied");
+    if (err) return res.status(500).json(err);
+    if (!user) return res.status(401).json({ error: "No account was found." });
 
     bcrypt.compare(password, user.password, function (err, valid) {
-      if (err) return res.status(500).end(err);
-      if (!valid) return res.status(401).end("access denied");
+      if (err) return res.status(500).json(err);
+      if (!valid) return res.status(401).json({ error: "Invalid password" });
       // start a session
       req.session.user = user;
       res.setHeader(
