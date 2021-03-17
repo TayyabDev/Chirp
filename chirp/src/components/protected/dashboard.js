@@ -1,12 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
-import {
-  SessionContext,
-  getSessionCookie,
-  setSessionCookie,
-} from "../libs/sessions";
-import { AuthorizedHeader } from "./header";
+import { SessionContext, getSessionCookie } from "../../libs/sessions";
+import { AuthorizedHeader } from "../header";
 import Skeleton from "react-loading-skeleton";
 
 var axios = require("axios");
@@ -50,8 +46,10 @@ export default function Dashboard(props) {
     <div>
       <AuthorizedHeader />
       {/* {loading ? <LoadingButton /> : <pre>{JSON.stringify(data, null, 2)}</pre>} */}
-      <h1>User information</h1>
-      <h2>{data ? JSON.stringify(data, null, 2) : <Skeleton count={3} />}</h2>
+      <h1 class="text-light">User information</h1>
+      <h2 class="text-light">
+        {data ? JSON.stringify(data, null, 2) : <Skeleton count={3} />}
+      </h2>
     </div>
   );
 }

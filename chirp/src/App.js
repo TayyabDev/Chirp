@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import logo from "./assets/images/logo.svg";
 // import "./App.css";
 import Header from "./components/header";
-import SignUp from "./components/signup";
-import Home from "./components/home";
-import Login from "./components/login";
-import Logout from "./components/logout";
+import SignUp from "./components/public/signup";
+import Home from "./components/public/home";
+import Login from "./components/public/login";
+import Logout from "./components/protected/logout";
 import NotFoundPage from "./components/notFoundPage";
-import Dashboard from "./components/dashboard";
-import Browse from "./components/browse";
+import Dashboard from "./components/protected/dashboard";
+import Browse from "./components/protected/browse";
 import { useHistory } from "react-router-dom";
 import { SessionContext, getSessionCookie } from "./libs/sessions";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -26,7 +26,7 @@ function App() {
   return (
     <SessionContext.Provider value={session}>
       <Router history={history}>
-        <div class="h-screen min-w-min bg-blueGray-900">
+        <div style={{ backgroundColor: "#0E0E10" }} class="min-vh-100">
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />

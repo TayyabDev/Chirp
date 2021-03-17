@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import twitch_dead from "../assets/images/twitch_dead.png";
-import { UnauthorizedHeader } from "./header";
+import { UnauthorizedHeader } from "../header";
 import {
   SessionContext,
   getSessionCookie,
   setSessionCookie,
-} from "../libs/sessions";
+} from "../../libs/sessions";
 import { useHistory } from "react-router-dom";
 
 export default function Home() {
