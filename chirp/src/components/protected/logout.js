@@ -5,7 +5,7 @@ import {
   SessionContext,
   getSessionCookie,
   setSessionCookie,
-} from "../libs/sessions";
+} from "../../libs/sessions";
 
 export default function Logout() {
   let history = useHistory();

@@ -1,6 +1,6 @@
 /* ./src/index.css */
 
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -26,4 +26,4 @@
 
 .text-primary-colour {
   @apply text-blueGray-200;
-}
+} */
