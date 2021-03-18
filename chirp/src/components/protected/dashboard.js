@@ -15,6 +15,8 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     let c = getSessionCookie();
+
+    console.log(c);
     if (c.login == null) {
       console.log("Cant access dashboard if not logged in.");
       //   setSessionCookie({});
@@ -22,21 +24,20 @@ export default function Dashboard(props) {
     } else {
       setLoading(true);
       const fetchUserData = async () => {
-        axios
-          .get("http://localhost:9080/api/userData", { withCredentials: true })
-          .then(
-            (response) => {
-              console.log(response);
-              //   setData(response.data);
-              setTimeout(() => {
-                setData(response.data);
-              }, 1000); // note this is just here to test out loading animations, api doesnt actually take this long
-              //   setLoading(false);
-            },
-            (error) => {
-              history.push("/login");
-            }
-          );
+        axios.get("/api/userData", { withCredentials: true }).then(
+          (response) => {
+            console.log(response);
+            //   setData(response.data);
+            setTimeout(() => {
+              setData(response.data);
+            }, 1000); // note this is just here to test out loading animations, api doesnt actually take this long
+            //   setLoading(false);
+          },
+          (error) => {
+            console.log("here");
+            history.push("/login");
+          }
+        );
       };
       fetchUserData();
     }
