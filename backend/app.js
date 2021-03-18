@@ -153,7 +153,7 @@ app.get("/api/userData", isAuthenticated, function (req, res, next) {
   );
 });
 
-// curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signup/
+// curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:9080/api/signup/
 app.post("/api/signup", function (req, res, next) {
   // extract data from HTTP request
   if (!("email" in req.body))
@@ -188,7 +188,7 @@ app.post("/api/signup", function (req, res, next) {
   );
 });
 
-// curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:3000/signin/
+// curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:9080/api/signin/
 app.post("/api/signin", function (req, res, next) {
   // extract data from HTTP request
   if (!("email" in req.body)) return res.status(400).end("email is missing");
@@ -218,13 +218,7 @@ app.post("/api/signin", function (req, res, next) {
   });
 });
 
-app.get("/api/isLoggedIn", function (req, res) {
-  req.session.user
-    ? res.json({ message: "logged in" })
-    : res.status(401).json({ message: "not logged in" });
-});
-
-// curl -b cookie.txt -c cookie.txt localhost:3000/signout/
+// curl -b cookie.txt -c cookie.txt localhost:9080/api/signout/
 app.get("/api/signout/", function (req, res, next) {
   req.session.destroy();
 

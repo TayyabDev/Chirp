@@ -31,7 +31,7 @@ export default function Signup() {
 
   const onSubmit = (data) => {
     console.log(data);
-    axios.post("/api/signup", data).then(
+    axios.post("http://localhost:9080/api/signup", data).then(
       (response) => {
         setErrmsg("");
         setIsSuccessful(true);

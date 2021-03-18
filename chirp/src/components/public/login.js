@@ -27,7 +27,7 @@ export default function Login() {
 
   const onSubmit = (data) => {
     console.log(data);
-    axios.post("api/signin", data).then(
+    axios.post("http://localhost:9080/api/signin", data).then(
       (response) => {
         setErrmsg("");
         setIsSuccessful(true);
