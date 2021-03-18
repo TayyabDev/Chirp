@@ -51,7 +51,7 @@ export default function Dashboard(props) {
       <h2 class="text-light">
         {data ? JSON.stringify(data, null, 2) : <Skeleton count={3} />}
       </h2>
-      <VideoPlayer />
+      <VideoPlayer streamKey="test" />
     </div>
   );
 }

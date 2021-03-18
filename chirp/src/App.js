@@ -36,9 +36,7 @@ function App() {
             <Route path="/signout" component={Logout} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/browse" component={Browse} />
-            <Route path="/watch/:streamKey">
-              <Watch />
-            </Route>
+            <Route path="/watch/:streamKey" component={Watch} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </div>
