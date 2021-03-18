@@ -10,7 +10,18 @@ const config = {
   },
   http: {
     port: 8000,
+    mediaroot: "./media",
     allow_origin: "*",
+  },
+  trans: {
+    ffmpeg: "/usr/bin/ffmpeg",
+    tasks: [
+      {
+        app: "live",
+        dash: true,
+        dashFlags: "[f=dash:window_size=3:extra_window_size=5]",
+      },
+    ],
   },
 };
 
