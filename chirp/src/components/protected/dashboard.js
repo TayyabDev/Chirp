@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { SessionContext, getSessionCookie } from "../../libs/sessions";
 import { AuthorizedHeader } from "../header";
 import Skeleton from "react-loading-skeleton";
-
+import VideoPlayer from "./player";
 var axios = require("axios");
 
 export default function Dashboard(props) {
@@ -51,6 +51,7 @@ export default function Dashboard(props) {
       <h2 class="text-light">
         {data ? JSON.stringify(data, null, 2) : <Skeleton count={3} />}
       </h2>
+      <VideoPlayer />
     </div>
   );
 }

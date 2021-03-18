@@ -1,5 +1,25 @@
 import React from "react";
-import ReactPlayer from "react-player";
+var djs = require("dashjs");
 
 // Render a YouTube video player
-<ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" />;
+export default class VideoPlayer extends React.Component {
+  state = {};
+  componentDidUpdate() {
+    const url = "http://localhost:8000/live/test/index.mpd";
+    const video = this.player;
+    const dashjs = djs.MediaPlayer().create();
+    dashjs.initialize(video, url, true);
+  }
+  render() {
+    return (
+      <div class="embed-responsive embed-responsive-16by9">
+        <video
+          controls
+          autoplay
+          muted
+          ref={(player) => (this.player = player)}
+        />
+      </div>
+    );
+  }
+}

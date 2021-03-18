@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import { SessionContext, getSessionCookie } from "./libs/sessions";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
+import Watch from "./components/protected/watch";
 
 function App() {
   const [session, setSession] = useState(getSessionCookie());
@@ -35,6 +36,9 @@ function App() {
             <Route path="/signout" component={Logout} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/browse" component={Browse} />
+            <Route path="/watch/:streamKey">
+              <Watch />
+            </Route>
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </div>
