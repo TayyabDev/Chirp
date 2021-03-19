@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { SessionContext, getSessionCookie } from "../../libs/sessions";
 import Skeleton from "react-loading-skeleton";
 import { AuthorizedHeader } from "../header";
@@ -16,8 +16,19 @@ export default function Browse() {
     let c = getSessionCookie();
     if (c.login == null) {
       console.log("Cant access browse page if not logged in.");
-      //   setSessionCookie({});
       history.push("/signout");
+    } else {
+      axios.get("/api/streams", { withCredentials: true }).then(
+        (response) => {
+          console.log(response);
+
+          setData(response.data);
+        },
+        (error) => {
+          console.log("here");
+          history.push("/login");
+        }
+      );
     }
   }, [session]);
 
@@ -31,30 +42,31 @@ export default function Browse() {
           </h1>
         </Row>
         <Row class="mt-1">
-          <Col>
-            <GameCard
-              title="Valorant"
-              imgSrc="https://static-cdn.jtvnw.net/ttv-boxart/VALORANT-285x380.jpg"
-              desc="VALORANT: a 5v5 character-based tactical FPS where precise gunplay meets unique agent abilities"
-            />
-          </Col>
-          <Col>
-            <GameCard
-              title="League of Legends"
-              imgSrc="https://static-cdn.jtvnw.net/ttv-boxart/League%20of%20Legends-285x380.jpg"
-              desc="League of Legends is an online game that blends the speed and intensity of an RTS with RPG elements."
-            />
-          </Col>
-          <Col>
-            <GameCard
-              title="GTA 5"
-              imgSrc="https://static-cdn.jtvnw.net/ttv-boxart/Grand%20Theft%20Auto%20V-285x380.jpg"
-              desc="Grand Theft Auto V is a 2013 action-adventure game developed by Rockstar North and published by Rockstar Games. "
-            />
-          </Col>
+          {data ? (
+            data.map((stream) => (
+              <Col>
+                <GameCard
+                  title={stream.streamUser}
+                  streamKey={stream.streamKey}
+                  imgSrc="https://static-cdn.jtvnw.net/ttv-boxart/VALORANT-285x380.jpg"
+                  desc="VALORANT: a 5v5 character-based tactical FPS where precise gunplay meets unique agent abilities"
+                />
+              </Col>
+            ))
+          ) : (
+            <Skeleton count={4} />
+          )}
         </Row>
       </Container>
     </div>
+  );
+}
+
+function GameCardWrapper() {
+  return (
+    <Row class="mt-1">
+      <Col></Col>
+    </Row>
   );
 }
 
@@ -63,9 +75,11 @@ function GameCard(props) {
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={props.imgSrc} />
       <Card.Body>
-        <Card.Title>{props.title}</Card.Title>
+        <Card.Title>{props.title}'s stream</Card.Title>
         {/* <Card.Text>{props.desc}</Card.Text> */}
-        <Button variant="primary">Watch</Button>
+        <Button variant="primary" as={Link} to={`/watch/${props.streamKey}`}>
+          Watch
+        </Button>
       </Card.Body>
     </Card>
   );

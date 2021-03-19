@@ -10,6 +10,8 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const { ObjectId } = require("bson");
 const app = express();
+var axios = require("axios");
+
 // const NodeMediaServer = require("node-media-server");
 
 app.use(bodyParser.json());
@@ -92,6 +94,34 @@ app.get("/api/userData", isAuthenticated, function (req, res, next) {
       return res.json({});
     }
   );
+});
+
+// get all running streams
+app.get("/api/streams", function (req, res, next) {
+  axios
+    .get("http://localhost:8000/api/streams", { withCredentials: true })
+    .then(
+      (response) => {
+        let returnStreams = [];
+        let liveStreams = response.data.live;
+        let streamKeys = Object.keys(liveStreams);
+        //   console.log(streamKey);
+        Users.find({ _id: { $in: streamKeys } }, function (err, users) {
+          users.forEach(function (user) {
+            returnStreams.push({
+              streamUser: user.username,
+              streamKey: user._id,
+              viewers: liveStreams[user._id].subscribers.length,
+            });
+          });
+          console.log(returnStreams);
+          return res.json(returnStreams);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 });
 
 // curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:9080/api/signup/
