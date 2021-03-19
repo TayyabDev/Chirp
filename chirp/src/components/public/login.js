@@ -27,6 +27,7 @@ export default function Login() {
 
   const onSubmit = (data) => {
     console.log(data);
+    console.log("hello world");
     axios.post("/api/signin", data).then(
       (response) => {
         setErrmsg("");

@@ -9,7 +9,7 @@
   "devDependencies": {},
   "scripts": {
     "server": "node backend/app.js",
-    "mediaServer": "node backend/mediaserver.js",
+    "mediaServer": "node mediaserver/mediaserver.js",
     "client": "npm start --prefix chirp",
     "dev": "concurrently \"npm run server\"  \"npm run mediaServer\" \"npm run client\""
   },
