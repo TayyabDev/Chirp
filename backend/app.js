@@ -99,9 +99,10 @@ app.get("/api/userData", isAuthenticated, function (req, res, next) {
 // get all running streams
 app.get("/api/streams", function (req, res, next) {
   axios
-    .get("http://localhost:8000/api/streams", { withCredentials: true })
+    .get("http://media-server:8000/api/streams", { withCredentials: true })
     .then(
       (response) => {
+        console.log("getting here");
         let returnStreams = [];
         let liveStreams = response.data.live;
         let streamKeys = Object.keys(liveStreams);
@@ -119,6 +120,7 @@ app.get("/api/streams", function (req, res, next) {
         });
       },
       (error) => {
+        console.log("here amigos");
         console.log(error);
       }
     );

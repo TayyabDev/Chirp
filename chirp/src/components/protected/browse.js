@@ -11,7 +11,7 @@ export default function Browse() {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
   let history = useHistory();
-
+  console.log("browse kingdom");
   useEffect(() => {
     let c = getSessionCookie();
     if (c.login == null) {
@@ -20,13 +20,15 @@ export default function Browse() {
     } else {
       axios.get("/api/streams", { withCredentials: true }).then(
         (response) => {
+          console.log("browse");
           console.log(response);
 
           setData(response.data);
         },
         (error) => {
-          console.log("here");
-          history.push("/login");
+          console.log("here browse");
+          console.log(error);
+          //   history.push("/login");
         }
       );
     }
