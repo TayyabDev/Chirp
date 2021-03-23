@@ -12,6 +12,7 @@ export default function Browse() {
   const [loading, setLoading] = useState(false);
   let history = useHistory();
   console.log("browse kingdom");
+  console.log("test 123");
   useEffect(() => {
     let c = getSessionCookie();
     if (c.login == null) {
@@ -48,7 +49,7 @@ export default function Browse() {
             data.map((stream) => (
               <Col>
                 <GameCard
-                  title={stream.streamUser}
+                  username={stream.streamUser}
                   streamKey={stream.streamKey}
                   imgSrc="https://static-cdn.jtvnw.net/ttv-boxart/VALORANT-285x380.jpg"
                   desc="VALORANT: a 5v5 character-based tactical FPS where precise gunplay meets unique agent abilities"
@@ -77,9 +78,19 @@ function GameCard(props) {
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={props.imgSrc} />
       <Card.Body>
-        <Card.Title>{props.title}'s stream</Card.Title>
+        <Card.Title>{props.username}'s stream</Card.Title>
         {/* <Card.Text>{props.desc}</Card.Text> */}
-        <Button variant="primary" as={Link} to={`/watch/${props.streamKey}`}>
+        <Button
+          variant="primary"
+          as={Link}
+          to={{
+            pathname: `/watch/${props.username}`,
+            state: {
+              username: props.username,
+              streamKey: props.streamKey,
+            },
+          }}
+        >
           Watch
         </Button>
       </Card.Body>

@@ -96,6 +96,21 @@ app.get("/api/userData", isAuthenticated, function (req, res, next) {
   );
 });
 
+app.get("/api/streams/:username", isAuthenticated, function (req, res, next) {
+  if (!req.params.username) {
+    return res.status(400).json({ error: "Username is missing" });
+  }
+  Users.findOne({ email: req.params.username }, function (err, user) {
+    // if (err) return res.status(500).json(err);
+    if (user)
+      return res.json({
+        streamUser: user.username,
+        streamKey: user._id,
+      });
+    return res.json({});
+  });
+});
+
 // get all running streams
 app.get("/api/streams", function (req, res, next) {
   axios

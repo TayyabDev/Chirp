@@ -9,7 +9,9 @@ services:
       - mern-app
   react-app:
     # image: react-app
-    build: ./chirp
+    build:
+      context: ./chirp
+      dockerfile: Dockerfile.dev
     stdin_open: true
     ports:
       - "80:80"
@@ -17,21 +19,22 @@ services:
       - mern-app
     # depends_on:
     #   - api-server
-  nginx-media:
-    # image: media-server
-    build: ./nginx-media
-    ports:
-      - "1935:1935"
-      # - "8000:8000"
-    networks:
-      - mern-app
-  # media-server:
-  #   image: media-server
+  # nginx-media:
+  #   # image: media-server
+  #   build: ./nginx-media
   #   ports:
   #     - "1935:1935"
-  #     - "8000:8000"
+  #     # - "8000:8000"
   #   networks:
   #     - mern-app
+  media-server:
+    build: ./mediaserver
+    # image: media-server
+    ports:
+      - "1935:1935"
+      - "8000:8000"
+    networks:
+      - mern-app
 networks:
   mern-app:
     driver: bridge
