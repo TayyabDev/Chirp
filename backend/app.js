@@ -66,11 +66,11 @@ let isAuthenticated = function (req, res, next) {
   next();
 };
 
-app.get("/", async function (req, res, next) {
-  res.json({
-    hello: "welcome to the api",
-  });
-});
+// app.get("/", async function (req, res, next) {
+//   res.json({
+//     hello: "welcome to the api",
+//   });
+// });
 
 app.use(function (req, res, next) {
   console.log("HTTP request", req.email, req.method, req.url, req.body);
