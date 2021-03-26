@@ -66,11 +66,11 @@ let isAuthenticated = function (req, res, next) {
   next();
 };
 
-app.get("/", async function (req, res, next) {
-  res.json({
-    hello: "welcome to the api",
-  });
-});
+// app.get("/", async function (req, res, next) {
+//   res.json({
+//     hello: "welcome to the api",
+//   });
+// });
 
 app.use(function (req, res, next) {
   console.log("HTTP request", req.email, req.method, req.url, req.body);
@@ -94,6 +94,21 @@ app.get("/api/userData", isAuthenticated, function (req, res, next) {
       return res.json({});
     }
   );
+});
+
+app.get("/api/streams/:username", isAuthenticated, function (req, res, next) {
+  if (!req.params.username) {
+    return res.status(400).json({ error: "Username is missing" });
+  }
+  Users.findOne({ email: req.params.username }, function (err, user) {
+    // if (err) return res.status(500).json(err);
+    if (user)
+      return res.json({
+        streamUser: user.username,
+        streamKey: user._id,
+      });
+    return res.json({});
+  });
 });
 
 // get all running streams

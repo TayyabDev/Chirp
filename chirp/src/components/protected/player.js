@@ -7,6 +7,7 @@ export default class VideoPlayer extends React.Component {
     super(props);
     this.state = {
       streamKey: this.props.streamKey,
+      streamUsername: this.props.streamUsername,
     };
   }
   async componentDidMount() {
