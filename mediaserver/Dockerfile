@@ -1,19 +1,86 @@
+# Credit https://github.com/illuspas/Node-Media-Server/blob/master/Dockerfile
+
 FROM node:14-alpine
 
+WORKDIR /tmp/ffmpeg
+
+ENV FFMPEG_VERSION="4.2.2"
+ENV FFMPEG_VERSION_URL="http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2"
+ENV BIN="/usr/bin"
+
+RUN cd && \
+    apk update && \
+    apk upgrade && \
+    apk add \
+    freetype-dev \
+    openssl-dev \
+    lame-dev \
+    libass-dev \
+    libogg-dev \
+    libtheora-dev \
+    libvorbis-dev \
+    libvpx-dev \
+    libwebp-dev \
+    libssh2 \
+    opus-dev \
+    rtmpdump-dev \
+    x264-dev \
+    x265-dev \
+    yasm-dev && \
+    apk add --no-cache --virtual \
+    .build-dependencies \
+    build-base \
+    bzip2 \
+    coreutils \
+    openssl \
+    nasm \
+    tar \
+    x264
+
+RUN wget "${FFMPEG_VERSION_URL}" && \
+    tar xjvf "ffmpeg-${FFMPEG_VERSION}.tar.bz2"
+
+# Reference: https://www.iiwnz.com/compile-ffmpeg-with-rtmps-for-facebook/
+
+RUN cd ffmpeg* && \
+    PATH="$BIN:$PATH" && \
+    ./configure --help && \
+    ./configure --bindir="$BIN" --disable-debug \
+    --disable-doc \
+    --disable-ffplay \
+    --enable-avresample \
+    --enable-gpl \
+    --enable-libass \
+    --enable-libfreetype \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-librtmp \
+    --enable-libtheora \
+    --enable-libvorbis \
+    --enable-libvpx \
+    --enable-libwebp \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-nonfree \
+    --enable-postproc \
+    --enable-openssl \
+    --enable-small \
+    --enable-version3 && \
+    make -j4 && \
+    make install && \
+    make distclean && \
+    rm -rf "/tmp/ffmpeg"  && \
+    apk del --purge .build-dependencies && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /usr/src/app
-COPY --from=mwader/static-ffmpeg:4.3.2 /ffmpeg /usr/local/bin/
-COPY --from=mwader/static-ffmpeg:4.3.2 /ffprobe /usr/local/bin/
-COPY --from=mwader/static-ffmpeg:4.3.2 /qt-faststart /usr/local/bin/
-COPY ./package.json ./
-COPY ./package-lock.json ./
 
-# RUN apt-get -y update && apt-get -y upgrade && apt-get install -y software-properties-common && add-apt-repository ppa:jonathonf/ffmpeg-4 && apt-get update && apt-get install -y ffmpeg
+COPY package*.json ./
 
-RUN npm install --silent
+RUN npm i
 
 COPY . .
 
-EXPOSE 1935
+EXPOSE 1935 8000
 
-CMD [ "node", "mediaserver.js"]
+CMD ["node","mediaserver.js"]
