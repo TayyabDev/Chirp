@@ -37,6 +37,12 @@ services:
       - "8000:8000"
     networks:
       - mern-app
+  chat-server:
+    build: ./chat
+    ports:
+      - "4001:4001"
+    networks:
+      - mern-app
 networks:
   mern-app:
     driver: bridge

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { AuthorizedHeader } from "../header";
 import VideoPlayer from "./player";
+import Chat from "./chat";
 var axios = require("axios");
 
 export default function Watch(props) {
@@ -47,6 +48,7 @@ export default function Watch(props) {
     <div>
       <AuthorizedHeader />
       <VideoPlayer streamUsername={streamUsername} streamKey={streamKey} />
+      <Chat streamUsername={streamUsername} streamKey={streamKey} />
     </div>
   );
 }
