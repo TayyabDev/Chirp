@@ -5,6 +5,8 @@ services:
     build: ./backend
     ports:
       - "9080:9080"
+    environment:
+      - MEDIA_SERVER_HOST=media-server
     networks:
       - mern-app
   react-app:

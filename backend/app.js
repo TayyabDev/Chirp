@@ -12,7 +12,7 @@ const { ObjectId } = require("bson");
 const app = express();
 var axios = require("axios");
 
-// const NodeMediaServer = require("node-media-server");
+const MEDIA_SERVER_HOST = process.env.MEDIA_SERVER_HOST || "localhost";
 
 app.use(bodyParser.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
@@ -114,10 +114,11 @@ app.get("/api/streams/:username", isAuthenticated, function (req, res, next) {
 // get all running streams
 app.get("/api/streams", function (req, res, next) {
   axios
-    .get("http://media-server:8000/api/streams", { withCredentials: true })
+    .get(`http://${MEDIA_SERVER_HOST}:8000/api/streams`, {
+      withCredentials: true,
+    })
     .then(
       (response) => {
-        console.log("getting here");
         let returnStreams = [];
         let liveStreams = response.data.live;
         let streamKeys = Object.keys(liveStreams);
@@ -135,7 +136,6 @@ app.get("/api/streams", function (req, res, next) {
         });
       },
       (error) => {
-        console.log("here amigos");
         console.log(error);
       }
     );
@@ -219,54 +219,6 @@ app.get("/api/signout/", function (req, res, next) {
   );
   res.redirect("/");
 });
-
-/*
-app.get('/video', isAuthenticated, (req, res) => {
-    res.sendFile('assets/sample.mp4', { root: __dirname });
-});
-
-app.get('/videos', (req, res) => res.json(videos));
-
-app.get('/video/:id/data', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    res.json(videos[id]);
-});
-
-app.get('/video/:id', (req, res) => {
-    const path = `assets/${req.params.id}.mp4`;
-    const stat = fs.statSync(path);
-    const fileSize = stat.size;
-    const range = req.headers.range;
-    if (range) {
-        const parts = range.replace(/bytes=/, "").split("-");
-        const start = parseInt(parts[0], 10);
-        const end = parts[1]
-            ? parseInt(parts[1], 10)
-            : fileSize-1;
-        const chunksize = (end-start) + 1;
-        const file = fs.createReadStream(path, {start, end});
-        const head = {
-            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-            'Accept-Ranges': 'bytes',
-            'Content-Length': chunksize,
-            'Content-Type': 'video/mp4',
-        };
-        res.writeHead(206, head);
-        file.pipe(res);
-    } else {
-        const head = {
-            'Content-Length': fileSize,
-            'Content-Type': 'video/mp4',
-        };
-        res.writeHead(200, head);
-        fs.createReadStream(path).pipe(res);
-    }
-});
-
-app.get('/video/:id/poster', (req, res) => {
-    thumbsupply.generateThumbnail(`assets/${req.params.id}.mp4`)
-    .then(thumb => res.sendFile(thumb));
-}); */
 
 const server = app.listen(9080, () => {
   console.log("app is running on 9080");
