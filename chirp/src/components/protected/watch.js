@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 // import { useEffect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
+import { SessionContext} from "../../libs/sessions";
 import { AuthorizedHeader } from "../header";
 import VideoPlayer from "./player";
 import Chat from "./chat";
 var axios = require("axios");
+
 
 export default function Watch(props) {
   const [streamKey, setStreamKey] = useState(props.location.state.streamKey);
   const [streamUsername, setStreamUsername] = useState(
     props.location.state.username
   );
-
+  const session = useContext(SessionContext);
   let history = useHistory();
 
   useEffect(() => {
-    console.log("check thuis");
     if (!streamUsername) {
-      //   console.log("Invalid username: " + streamUsername);
-      console.log("Checking url: " + props.match.params.streamUsername);
       if (props.match.params.streamUsername) {
         setStreamUsername(props.match.params.streamUsername);
       } else {
@@ -32,7 +30,6 @@ export default function Watch(props) {
         .get(`/api/streams/${streamUsername}`, { withCredentials: true })
         .then(
           (response) => {
-            console.log("response here ");
             console.log(response.data);
             setStreamKey(response.data.streamKey);
           },
@@ -48,7 +45,7 @@ export default function Watch(props) {
     <div>
       <AuthorizedHeader />
       <VideoPlayer streamUsername={streamUsername} streamKey={streamKey} />
-      <Chat streamUsername={streamUsername} streamKey={streamKey} />
+      <Chat streamUsername={streamUsername} email={session.login.email} />
     </div>
   );
 }

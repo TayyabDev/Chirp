@@ -11,10 +11,7 @@ export default class VideoPlayer extends React.Component {
     };
   }
   async componentDidMount() {
-    // const url = `http://localhost:8000/live/${this.state.streamKey}/index.mpd`;
     const url = `/live/${this.state.streamKey}/index.mpd`;
-
-    console.log(url);
     const video = this.player;
     const dashjs = djs.MediaPlayer().create();
     dashjs.initialize(video, url, true);

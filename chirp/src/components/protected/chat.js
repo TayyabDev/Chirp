@@ -6,15 +6,17 @@ export default class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      streamKey: this.props.streamKey,
+      userEmail: this.props.email,
       streamUsername: this.props.streamUsername,
       chatForm: document.getElementById('chat-form'),
       chatMessages: document.querySelector('.chat-messages'),
       userList: document.getElementById('users'),
       socket: socketIOClient("http://localhost:4001"),
     };
-    const json =  {username: this.state.streamUsername,
-       room: this.state.streamKey};
+    console.log("PROPS:", props);
+    
+    const json =  {username: this.state.userEmail,
+       room: this.state.streamUsername};
     this.state.socket.emit('joinRoom', json);
 
     this.state.socket.on('message', (message) => {
