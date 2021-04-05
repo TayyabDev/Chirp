@@ -30,7 +30,6 @@ export default function Watch(props) {
         .get(`/api/streams/${streamUsername}`, { withCredentials: true })
         .then(
           (response) => {
-            console.log(response.data);
             setStreamKey(response.data.streamKey);
           },
           (error) => {

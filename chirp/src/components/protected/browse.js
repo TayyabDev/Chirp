@@ -19,13 +19,10 @@ export default function Browse() {
     } else {
       axios.get("/api/streams", { withCredentials: true }).then(
         (response) => {
-          console.log(response);
-
           setData(response.data);
         },
         (error) => {
           console.log(error);
-          //   history.push("/login");
         }
       );
     }
