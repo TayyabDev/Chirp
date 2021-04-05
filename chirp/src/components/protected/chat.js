@@ -1,6 +1,7 @@
 import React from "react";
 import "../../Chat.css";
 import socketIOClient from "socket.io-client";
+var axios = require("axios");
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -13,18 +14,21 @@ export default class Chat extends React.Component {
       userList: document.getElementById('users'),
       socket: socketIOClient("http://localhost:4001"),
     };
-    console.log("PROPS:", props);
     
-    const json =  {username: this.state.userEmail,
-       room: this.state.streamUsername};
-    this.state.socket.emit('joinRoom', json);
-
-    this.state.socket.on('message', (message) => {
-      this.outputMessage(message);
-      this.state.chatMessages = document.querySelector('.chat-messages');
-      // Scroll down
-      this.state.chatMessages.scrollTop = this.state.chatMessages.scrollHeight;
-    });
+    axios.get("/api/userData", { withCredentials: true }).then(
+      (response) => {
+        const json =  {username: response.data.user.username,
+          room: this.state.streamUsername};
+        this.state.socket.emit('joinRoom', json);
+   
+        this.state.socket.on('message', (message) => {
+          this.outputMessage(message);
+          this.state.chatMessages = document.querySelector('.chat-messages');
+          // Scroll down
+          this.state.chatMessages.scrollTop = this.state.chatMessages.scrollHeight;
+        });
+      }
+    );
     this.outputMessage = this.outputMessage.bind(this);
     this.outputUsers = this.outputUsers.bind(this);
     this.handleSend = this.handleSend.bind(this);
