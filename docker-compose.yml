@@ -17,6 +17,8 @@ services:
     stdin_open: true
     ports:
       - "80:80"
+    environment:
+      - CHAT_SERVER_HOST=chat-server
     networks:
       - mern-app
     # depends_on:
