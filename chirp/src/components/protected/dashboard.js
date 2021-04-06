@@ -34,7 +34,6 @@ export default function Dashboard(props) {
             //   setLoading(false);
           },
           (error) => {
-            console.log("here");
             history.push("/login");
           }
         );
