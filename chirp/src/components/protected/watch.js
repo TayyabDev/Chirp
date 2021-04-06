@@ -45,7 +45,7 @@ export default function Watch(props) {
   return (
     <div>
       <AuthorizedHeader />
-      <div class="container">
+      <div class="container-watch">
         <VideoPlayer streamUsername={streamUsername} streamKey={streamKey} />
         <Chat class="stream-chat" streamUsername={streamUsername} email={session.login.email} />
       </div>

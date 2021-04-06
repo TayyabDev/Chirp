@@ -1,12 +1,11 @@
-.container {
-    margin-top: 2rem;
+.container-watch {
     display: flex;
     justify-content: space-evenly;
 }
 
 .stream-video {
     width: 100%;
-    height: 640px;
+    height: 740px;
 }
 
 :root {
@@ -49,7 +48,7 @@ a {
 }
 
 .chat-messages {
-	height: 560px;
+	height: 660px;
 	min-width: 350px;
 	overflow-y: scroll;
 	border: 30px solid var(--dark-color-a);
