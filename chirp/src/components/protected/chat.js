@@ -1,9 +1,10 @@
 import React from "react";
-import "../../Chat.css";
+import "../../Watch.css";
 import socketIOClient from "socket.io-client";
 var axios = require("axios");
 
 export default class Chat extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +12,6 @@ export default class Chat extends React.Component {
       streamUsername: this.props.streamUsername,
       chatForm: document.getElementById('chat-form'),
       chatMessages: document.querySelector('.chat-messages'),
-      userList: document.getElementById('users'),
       socket: socketIOClient("http://localhost:4001"),
     };
     
@@ -30,7 +30,6 @@ export default class Chat extends React.Component {
       }
     );
     this.outputMessage = this.outputMessage.bind(this);
-    this.outputUsers = this.outputUsers.bind(this);
     this.handleSend = this.handleSend.bind(this);
   }
 
@@ -50,22 +49,10 @@ export default class Chat extends React.Component {
     document.querySelector('.chat-messages').appendChild(div);
   }
 
-  // Add users to DOM
-  outputUsers(users) {
-    this.state.userList = document.getElementById('users');
-    this.state.userList.innerHTML = '';
-    users.forEach((user) => {
-      const li = document.createElement('li');
-      li.innerText = user.username;
-      this.state.userList.appendChild(li);
-    });
-  }
-
   handleSend(e) {
     e.preventDefault();
     this.state.chatForm = document.getElementById('chat-form');
     this.state.chatMessages = document.querySelector('.chat-messages');
-    this.state.userList = document.getElementById('users');
 
     // Get message text
     let msg = document.getElementById('msg').value;
@@ -82,20 +69,11 @@ export default class Chat extends React.Component {
     document.getElementById('msg').value = '';
     document.getElementById('msg').focus();
   }
-
+  
   render() {
     return (
       <div class="chat-container">
-        <header class="chat-header">
-          <h1><i class="fas fa-smile"></i> Chat</h1>
-        </header>
-        <main class="chat-main">
-          <div class="chat-sidebar">
-            <h3><i class="fas fa-users"></i> Users</h3>
-            <ul id="users"></ul>
-          </div>
-          <div class="chat-messages"></div>
-        </main>
+        <div class="chat-messages"></div>
         <div class="chat-form-container">
           <form id="chat-form">
             <input

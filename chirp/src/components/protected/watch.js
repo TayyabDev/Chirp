@@ -5,10 +5,12 @@ import { SessionContext} from "../../libs/sessions";
 import { AuthorizedHeader } from "../header";
 import VideoPlayer from "./player";
 import Chat from "./chat";
+import "../../Watch.css";
 var axios = require("axios");
 
 
 export default function Watch(props) {
+  
   const [streamKey, setStreamKey] = useState(props.location.state.streamKey);
   const [streamUsername, setStreamUsername] = useState(
     props.location.state.username
@@ -39,12 +41,14 @@ export default function Watch(props) {
         );
     }
   }, [streamUsername]);
-
+  
   return (
     <div>
       <AuthorizedHeader />
-      <VideoPlayer streamUsername={streamUsername} streamKey={streamKey} />
-      <Chat streamUsername={streamUsername} email={session.login.email} />
+      <div class="container">
+        <VideoPlayer streamUsername={streamUsername} streamKey={streamKey} />
+        <Chat class="stream-chat" streamUsername={streamUsername} email={session.login.email} />
+      </div>
     </div>
   );
 }

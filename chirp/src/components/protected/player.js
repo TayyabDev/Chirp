@@ -18,18 +18,14 @@ export default class VideoPlayer extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div class="embed-responsive embed-responsive-16by9">
-          <video
-            controls
-            autoPlay
-            muted
-            ref={(player) => (this.player = player)}
-          >
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </div>
+        <video class="stream-video"
+          controls
+          autoPlay
+          muted
+          ref={(player) => (this.player = player)}
+        >
+          Your browser does not support the video tag.
+        </video>
     );
   }
 }
