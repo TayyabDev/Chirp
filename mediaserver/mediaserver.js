@@ -33,8 +33,6 @@ nms.on("preConnect", (id, args) => {
     "[NodeEvent on preConnect]",
     `id=${id} args=${JSON.stringify(args)}`
   );
-  // let session = nms.getSession(id);
-  // session.reject();
 });
 
 nms.on("postConnect", (id, args) => {
@@ -56,8 +54,6 @@ nms.on("prePublish", (id, StreamPath, args) => {
     "[NodeEvent on prePublish]",
     `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`
   );
-  // let session = nms.getSession(id);
-  // session.reject();
 });
 
 nms.on("postPublish", (id, StreamPath, args) => {
@@ -79,8 +75,6 @@ nms.on("prePlay", (id, StreamPath, args) => {
     "[NodeEvent on prePlay]",
     `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`
   );
-  // let session = nms.getSession(id);
-  // session.reject();
 });
 
 nms.on("postPlay", (id, StreamPath, args) => {

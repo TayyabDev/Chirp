@@ -1,8 +1,5 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
 const cors = require("cors");
-// const thumbsupply = require("thumbsupply");
 const bcrypt = require("bcrypt");
 const cookie = require("cookie");
 const bodyParser = require("body-parser");
@@ -66,12 +63,6 @@ let isAuthenticated = function (req, res, next) {
   next();
 };
 
-// app.get("/", async function (req, res, next) {
-//   res.json({
-//     hello: "welcome to the api",
-//   });
-// });
-
 app.use(function (req, res, next) {
   console.log("HTTP request", req.email, req.method, req.url, req.body);
   next();
@@ -101,7 +92,6 @@ app.get("/api/streams/:username", isAuthenticated, function (req, res, next) {
     return res.status(400).json({ error: "Username is missing" });
   }
   Users.findOne({ email: req.params.username }, function (err, user) {
-    // if (err) return res.status(500).json(err);
     if (user)
       return res.json({
         streamUser: user.username,
@@ -122,7 +112,6 @@ app.get("/api/streams", function (req, res, next) {
         let returnStreams = [];
         let liveStreams = response.data.live;
         let streamKeys = Object.keys(liveStreams);
-        //   console.log(streamKey);
         Users.find({ _id: { $in: streamKeys } }, function (err, users) {
           users.forEach(function (user) {
             returnStreams.push({
@@ -131,7 +120,6 @@ app.get("/api/streams", function (req, res, next) {
               viewers: liveStreams[user._id].subscribers.length,
             });
           });
-          console.log(returnStreams);
           return res.json(returnStreams);
         });
       },

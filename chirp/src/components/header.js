@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link, BrowserRouter } from "react-router-dom";
-import logo from "../assets/images/logo.svg";
-import { SessionContext, getSessionCookie } from "../libs/sessions";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 
 export function UnauthorizedHeader() {
