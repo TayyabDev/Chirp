@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SignUp from "./components/public/signup";
 import Home from "./components/public/home";
 import Login from "./components/public/login";
+import Credits from "./components/public/credits";
 import Logout from "./components/protected/logout";
 import NotFoundPage from "./components/notFoundPage";
 import Dashboard from "./components/protected/dashboard";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/home" component={Home} />
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
+            <Route path="/credits" component={Credits} />
             <Route path="/signout" component={Logout} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/browse" component={Browse} />
