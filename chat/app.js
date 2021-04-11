@@ -53,7 +53,6 @@ io.on("connection", (socket) => {
   socket.on("joinRoom", (json) => {
     let username = json.username;
     let room = json.room;
-    console.log(json, username, room);
     const user = userJoin(socket.id, username, room);
 
     socket.join(user.room);

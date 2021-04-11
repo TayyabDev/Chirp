@@ -26,8 +26,6 @@ export default function Login() {
   let history = useHistory();
 
   const onSubmit = (data) => {
-    console.log(data);
-    console.log("hello world");
     axios.post("/api/signin", data).then(
       (response) => {
         setErrmsg("");
@@ -42,7 +40,6 @@ export default function Login() {
       (error) => {
         console.log(error.response.data);
         setErrmsg(error.response.data.error);
-        // setResp(error.response.data.error);
       }
     );
   };

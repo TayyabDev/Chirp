@@ -1,8 +1,5 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
 const cors = require("cors");
-// const thumbsupply = require("thumbsupply");
 const bcrypt = require("bcrypt");
 const cookie = require("cookie");
 const bodyParser = require("body-parser");
@@ -66,80 +63,12 @@ let isAuthenticated = function (req, res, next) {
   next();
 };
 
-// app.get("/", async function (req, res, next) {
-//   res.json({
-//     hello: "welcome to the api",
-//   });
-// });
-
 app.use(function (req, res, next) {
   console.log("HTTP request", req.email, req.method, req.url, req.body);
   next();
 });
 
 var multer = require("multer");
-var upload = multer({ dest: "uploads/" });
-
-app.post("/test/", async function (req, res, next) {
-  const result = await Users.find();
-  res.json(result);
-});
-
-app.get("/api/userData", isAuthenticated, function (req, res, next) {
-  Users.findOne(
-    { $or: [{ email: req.user.email }, { username: req.user.username }] },
-    function (err, user) {
-      if (err) return res.status(500).json(err);
-      if (user) return res.json({ user });
-      return res.json({});
-    }
-  );
-});
-
-app.get("/api/streams/:username", isAuthenticated, function (req, res, next) {
-  if (!req.params.username) {
-    return res.status(400).json({ error: "Username is missing" });
-  }
-  Users.findOne({ email: req.params.username }, function (err, user) {
-    // if (err) return res.status(500).json(err);
-    if (user)
-      return res.json({
-        streamUser: user.username,
-        streamKey: user._id,
-      });
-    return res.json({});
-  });
-});
-
-// get all running streams
-app.get("/api/streams", function (req, res, next) {
-  axios
-    .get(`http://${MEDIA_SERVER_HOST}:8000/api/streams`, {
-      withCredentials: true,
-    })
-    .then(
-      (response) => {
-        let returnStreams = [];
-        let liveStreams = response.data.live;
-        let streamKeys = Object.keys(liveStreams);
-        //   console.log(streamKey);
-        Users.find({ _id: { $in: streamKeys } }, function (err, users) {
-          users.forEach(function (user) {
-            returnStreams.push({
-              streamUser: user.username,
-              streamKey: user._id,
-              viewers: liveStreams[user._id].subscribers.length,
-            });
-          });
-          console.log(returnStreams);
-          return res.json(returnStreams);
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-});
 
 // curl -H "Content-Type: application/json" -X POST -d '{"email":"bobjones@gmail.com","password":"bobjones"}' -c cookie.txt localhost:9080/api/signup/
 app.post("/api/signup", function (req, res, next) {
@@ -218,6 +147,59 @@ app.get("/api/signout/", function (req, res, next) {
     })
   );
   res.redirect("/");
+});
+
+app.get("/api/userData", isAuthenticated, function (req, res, next) {
+  Users.findOne(
+    { $or: [{ email: req.user.email }, { username: req.user.username }] },
+    function (err, user) {
+      if (err) return res.status(500).json(err);
+      if (user) return res.json({ user });
+      return res.json({});
+    }
+  );
+});
+
+app.get("/api/streams/:username", isAuthenticated, function (req, res, next) {
+  if (!req.params.username) {
+    return res.status(400).json({ error: "Username is missing" });
+  }
+  Users.findOne({ email: req.params.username }, function (err, user) {
+    if (user)
+      return res.json({
+        streamUser: user.username,
+        streamKey: user._id,
+      });
+    return res.json({});
+  });
+});
+
+// get all running streams
+app.get("/api/streams", function (req, res, next) {
+  axios
+    .get(`http://${MEDIA_SERVER_HOST}:8000/api/streams`, {
+      withCredentials: true,
+    })
+    .then(
+      (response) => {
+        let returnStreams = [];
+        let liveStreams = response.data.live;
+        let streamKeys = Object.keys(liveStreams);
+        Users.find({ _id: { $in: streamKeys } }, function (err, users) {
+          users.forEach(function (user) {
+            returnStreams.push({
+              streamUser: user.username,
+              streamKey: user._id,
+              viewers: liveStreams[user._id].subscribers.length,
+            });
+          });
+          return res.json(returnStreams);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 });
 
 const server = app.listen(9080, () => {

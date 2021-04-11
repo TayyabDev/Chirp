@@ -8,7 +8,6 @@ export const setSessionCookie = (session) => {
 export const intruderAlert = () => {
   console.log("You are not authorized.");
   Cookies.remove("session");
-  // Cookies.set("session", session, { expires: 14 });
 };
 
 export const getSessionCookie = () => {

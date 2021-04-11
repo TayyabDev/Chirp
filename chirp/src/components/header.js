@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link, BrowserRouter } from "react-router-dom";
-import logo from "../assets/images/logo.svg";
-import { SessionContext, getSessionCookie } from "../libs/sessions";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 
 export function UnauthorizedHeader() {
@@ -14,8 +12,8 @@ export function UnauthorizedHeader() {
           <Nav.Link as={Link} to="/home">
             Home
           </Nav.Link>
-          <Nav.Link as={Link} to="/about">
-            About
+          <Nav.Link as={Link} to="/credits">
+            Credits
           </Nav.Link>
           <Nav.Link as={Link} to="/signup">
             Sign Up
@@ -59,8 +57,8 @@ export function AuthorizedHeader() {
           <Nav.Link as={Link} to="/browse">
             Browse
           </Nav.Link>
-          <Nav.Link as={Link} to="/settings">
-            Settings
+          <Nav.Link as={Link} to="/credits">
+            Credits
           </Nav.Link>
           <Nav.Link as={Link} to="/signout">
             Sign out

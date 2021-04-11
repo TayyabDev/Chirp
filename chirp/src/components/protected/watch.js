@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-// import { useEffect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { SessionContext} from "../../libs/sessions";
 import { AuthorizedHeader } from "../header";
