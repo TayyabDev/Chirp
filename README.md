@@ -1,4 +1,14 @@
 # Video Streaming App
+Public URL - [http://3.80.243.76](http://3.80.243.76)
+
+# Instructions
+1) Make an account by signing up
+2) Login to Account 
+3) Download OBS [https://obsproject.com/](https://obsproject.com/)
+4) Go to settings in OBS and go to the stream tab
+5) Set Service to Custom..., Server to rtmp://3.80.243.76/live, and set the stream key to the one given in the dashboard after logging in
+6) Press start stream and you should be able to see your stream running on the web app on the browse tab
+
 ## Team members
 * Chun Ho Lee
 * Tayyab Waqar
