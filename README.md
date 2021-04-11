@@ -3,6 +3,10 @@ Public URL - [http://3.80.243.76](http://3.80.243.76)
 
 Youtube video - https://www.youtube.com/watch?v=t_PEnlDe-2E
 
+API documentation - https://github.com/UTSCC09/project-team-7/tree/main/doc
+
+Credits page - https://github.com/UTSCC09/project-team-7/blob/main/chirp/src/components/public/credits.js
+
 # Instructions
 1) Make an account by signing up
 2) Login to Account 
