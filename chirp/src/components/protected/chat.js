@@ -2,7 +2,7 @@ import React from "react";
 import "../../Watch.css";
 import socketIOClient from "socket.io-client";
 var axios = require("axios");
-const CHAT_SERVER_HOST = process.env.CHAT_SERVER_HOST || "localhost";
+const CHAT_SERVER_HOST = process.env.CHAT_SERVER_HOST || window.location.hostname;
 
 export default class Chat extends React.Component {
   constructor(props) {
