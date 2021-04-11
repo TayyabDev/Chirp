@@ -1,6 +1,8 @@
 # Video Streaming App
 Public URL - [http://3.80.243.76](http://3.80.243.76)
 
+Youtube video - https://www.youtube.com/watch?v=t_PEnlDe-2E
+
 # Instructions
 1) Make an account by signing up
 2) Login to Account 
