@@ -1,39 +1,25 @@
-# Video Streaming App
-Public URL - [http://3.80.243.76](http://3.80.243.76)
+# Chirp - The Live Streaming App
 
-Youtube video - https://www.youtube.com/watch?v=t_PEnlDe-2E
+Chirp is a website where gamers can stream their content for others to watch and chat with people. Here's a preview of Chirp:
 
-API documentation - https://github.com/UTSCC09/project-team-7/tree/main/doc
+![image](https://user-images.githubusercontent.com/19651696/116012311-ce34bd00-a5f7-11eb-9930-1494940620a0.png)
 
-Credits page - https://github.com/UTSCC09/project-team-7/blob/main/chirp/src/components/public/credits.js
+# Local Setup
+To build Chirp locally, you'll need to have [Docker Compose](https://docs.docker.com/compose/install/) installed on your system.
+1) Clone this repository
+2) In the project root, run ```make buildandrun```, or ```docker-compose --build up```
+3) Open up a browser and visit http://localhost:80
 
-# Instructions
+# User Guide
 1) Make an account by signing up
-2) Login to Account 
+2) Login to the account.
 3) Download OBS [https://obsproject.com/](https://obsproject.com/)
 4) Go to settings in OBS and go to the stream tab
-5) Set Service to Custom..., Server to rtmp://3.80.243.76/live, and set the stream key to the one given in the dashboard after logging in
-6) Press start stream and you should be able to see your stream running on the web app on the browse tab
+5) Set Service to Custom..., Server to rtmp://localhost/live, and set the stream key to the one given in the dashboard after logging in
+6) Press start stream and you should be able to see your stream running on the web app on the browse tab!
 
-## Team members
-* Chun Ho Lee
-* Tayyab Waqar
+# Architecture
 
-## Description of the web application
-The application will be a video streaming application similar to Twitch. Users will be able to stream content and chat with friends during the live-stream.
+The frontend for Chirp is written in React, and the static build files are served by NGINX. Chirp uses Express.js as an API backend. The livestream video data is sent to our [Node Media Server](https://github.com/illuspas/Node-Media-Server) instance, which handles the RTMP stream and transcodes it to [MPEG-DASH](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP) using FFMPEG. 
 
-## Description of features for the beta version
-For the beta we will complete basic user streaming.
-
-## Description of features for the final version
-For the final version we have implemented live streams, live stream information, what streams are live, and chat feature.
-
-## Description of the technologies to be used for building and deploying the application
-We have used the following technologies MERN - Mongodb, Express, React, and Node. We have also used Docker, Socket IO API, and Node Media Server API.
-
-## Description of the top 5 technical challenges
-* Streaming content to other users over the cloud using OBS - Open Broadcast Software
-* Making a page for users that have gone live 
-* Chat component unique to each stream that is always online
-* Integrating and setting up Sockets, Live stream permissions, and Docker on AWS by configuring and using nginx
-* Dockerize the application so the application runs the same on Windows, Mac, and Linux
+We use Docker Compose to break these up into 3 microservices; one for the frontend, one for the backend, and one for the media server. The frontend is served by NGINX, and it reverse proxies specific requests to the backend server and the media server. 
